@@ -1,7 +1,7 @@
 ---
 title: Javascript_data_structure
 date: 2017-06-25 12:55:30
-tags:
+tags: 读书笔记
 ---
 
 ## Javascript 数据类型
