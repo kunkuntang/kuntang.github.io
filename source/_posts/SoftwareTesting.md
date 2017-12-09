@@ -1,8 +1,9 @@
 ---
-title: SoftwareTesting
+title: 软件测试
 year: 2017
 month: 4
 day: 1
+tags: 课本摘抄
 ---
 ### 行业内的主要知识点
 #### 软件危机

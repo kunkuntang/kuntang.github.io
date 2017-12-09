@@ -1,89 +1,87 @@
 ---
 layout: '[post]'
-title: mongodb_command
+title: MongoDB Shell命令
 date: 2017-11-30 16:39:03
 tags: 读书笔记
 ---
 
-# MongoDB Shell命令
-
-## 开启MongoDB数据库服务
+#### 开启MongoDB数据库服务
 
 &emsp;&emsp;mongo根目录`/bin/mongod -f` 配置文件目录/配置文件名
 例：`./bin/mongod -f conf/mongod.conf`
 
 <!-- more -->
 
-## 强行关闭MongoDB
+#### 强行关闭MongoDB
 
 &emsp;&emsp;先用命令 `ps -ef | grep mongod `查出mongod 的进程pid
 然后`kill pid `即可
 
-## 数据库
+#### 数据库
 
-### 连接MongoDB数据库
+##### 连接MongoDB数据库
 
 &emsp;&emsp;mongo根目录`/bin/mongo` 数据库地址:端口号/库名称
 例： `./bin/mongo 127.0.0.1:12345/test`
 
-### 关闭MongoDB数据库
+##### 关闭MongoDB数据库
 
 &emsp;&emsp;`db.shutdownServer()`
 
-### 新建和切换数据库
+##### 新建和切换数据库
 
 &emsp;&emsp;MongoDB不用特别地去声明新建一个数据库，直接用`use 数据库名` 就可以了。
 
-### 删除数据库
+##### 删除数据库
 
 &emsp;&emsp;先用`db.use`切换到要删除的数据库，然后使用`db.dropDatabase()`来删除数据库
 
-## 数据操作
+#### 数据操作
 
-### 插入一条数据
+##### 插入一条数据
 
 `db.collection.insert({key: value})`
 
 其中集名称可以自己起
 
-### 插入多条数据
+##### 插入多条数据
 
 &emsp;&emsp;可以使用for循环插入： `for(i＝3;i<100;i++)db.collection.insert({key: value})`
 
-### 查询所有数据
+##### 查询所有数据
 
 `db.collection.find()`
 
-### 查询单条数据
+##### 查询单条数据
 
 `db.collection.find({key: value})`
 
-### 查询后有条件地进行处理
+##### 查询后有条件地进行处理
 
 `db.collection.find({key: value}).skip(3).limit(5).sort({key: value})`
 
 上面查询语句后的限制分别是skip（跳过多少条数据）、limit（限制查多少条数据）、sort(将查询出来的结果集排序)
 
-### 显示库中的所有集名称
+##### 显示库中的所有集名称
 
 `show collections`
 
-### 删除数据库中的集合
+##### 删除数据库中的集合
 
 `db.collection.drop()`
 
-## 索引
+#### 索引
 
-### 查看索引
+##### 查看索引
 
 `db.imooc_2.getIndexes()`
 
-### _id索引
+##### _id索引
 
 - _id索引是绝大多数集合默认建立的索引。
 - 对于每个插入的数据，MongoDB都会自动生成一条唯一的_id字段。
 
-### 创建一个单键索引
+##### 创建一个单键索引
 
 - 单键索引是最普通的索引
 - 单键索引不会自动创建
@@ -95,7 +93,7 @@ tags: 读书笔记
 - index: 索引
 - order: 1表示升序， -1表示降序
 
-### 创建一个多键索引
+##### 创建一个多键索引
 
 多键索引与单键索引创建形式相同，区别在于字段的值。 
 
@@ -106,7 +104,7 @@ tags: 读书笔记
 
 `db.collection.insert({x:new Date()}) //插入一条数组数据`
 
-### 创建一个复合索引
+##### 创建一个复合索引
 
 &emsp;&emsp;当我们的查询条件不止一个的时候，就需要建立复合索引
 
@@ -114,7 +112,7 @@ tags: 读书笔记
 
 `db.collection.ensureIndex({x:1, y:1})`
 
-### 创建一个过期索引
+##### 创建一个过期索引
 
 - 在一段时间后会过期的索引 
 - 在索引过期后，相应的数据会被删除 

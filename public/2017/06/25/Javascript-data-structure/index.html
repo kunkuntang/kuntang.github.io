@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Tommi_Max,kuntang@163.com"><title>Javascript 数据类型 · Tommi_Max's blog</title><meta name="description" content="&amp;emsp;&amp;emsp;本文摘录于Javascript高级程序设计（Professional JavaScript for Web Developers）并加上了自己的一些理解，如发现本文有什么错误之处，请麻烦通过以下方式联系我作修正，谢谢!&amp;emsp;&amp;emsp;微信号: kuntang9080&amp;"><meta name="keywords" content="HTML,CSS,JS,NodeJs,PWA"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;margin-bottom: 1.5rem"><h3 title=""><a href="/">Tommi_Max's blog</a></h3><div class="description"><p>Less is more.</p></div></div></div><ul class="social-links"><li><a href="https://lenkuntang.cn"><i class="fa fa-rss"></i></a></li><li><a href="http://github.com/kunkuntang"><i class="fa fa-github"></i></a></li></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li><li><a href="/tags">标签</a></li></div><div class="information"><div class="back_btn"><li><a onclick="window.history.go(-1)" class="fa fa-chevron-left"> </a></li></div><div class="avatar"><img src="https://avatars2.githubusercontent.com/u/13299413?s=460&amp;v=4"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h2><a>Javascript 数据类型</a></h2></div><div class="post-content"><p>&emsp;&emsp;<em>本文摘录于Javascript高级程序设计（Professional JavaScript for Web Developers）并加上了自己的一些理解，如发现本文有什么错误之处，请麻烦通过以下方式联系我作修正，谢谢!</em><br>&emsp;&emsp;<em>微信号: kuntang9080</em><br>&emsp;&emsp;<em>邮箱：kuntang@163.com</em></p>
+<hr>
+<p>ECMAScript中有5种简单数据类型（也称基本数据类型）：Undefined、Null、Boolean、Number、String。还有一种复杂数据类型：Object。</p>
+<hr>
+<a id="more"></a>
+<h5 id="typeof-操作符"><a href="#typeof-操作符" class="headerlink" title="typeof 操作符"></a>typeof 操作符</h5><p>对一个值使用typeof操作符可能返回下列某个字符串</p>
+<table>
+<thead>
+<tr>
+<th>返回值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>undefined</td>
+<td>这个值没有定义</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>这个值是布尔值</td>
+</tr>
+<tr>
+<td>string</td>
+<td>这个值是字符串</td>
+</tr>
+<tr>
+<td>number</td>
+<td>这个值是数值</td>
+</tr>
+<tr>
+<td>object</td>
+<td>这个值是对象或者null</td>
+</tr>
+<tr>
+<td>function</td>
+<td>这个值是函数</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意：当typeof返回是object的时候对应着两个值，因此不能用typeof来区分object类型和null类型，此时应该用instanceof()函数</strong></p>
+<hr>
+<h5 id="Undefined类型"><a href="#Undefined类型" class="headerlink" title="Undefined类型"></a>Undefined类型</h5><p>Undefined类型只有一个值，即undefined</p>
+<p>任何使用var声明但未对其加以初始化的变量都会赋以undefined值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> message = <span class="literal">undefined</span>;</div><div class="line">alert(message == <span class="literal">undefined</span>);</div><div class="line"><span class="comment">// true</span></div></pre></td></tr></table></figure>
+<p>对未初始化的变量和未声明的变量使用typeof操作符都会返回undefined值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 只声明了message，没有声明age</span></div><div class="line"><span class="keyword">var</span> message;</div><div class="line"></div><div class="line">alert(<span class="keyword">typeof</span> message);</div><div class="line"><span class="comment">// undefined</span></div><div class="line">alert(<span class="keyword">typeof</span> age);</div><div class="line"><span class="comment">// undefined</span></div></pre></td></tr></table></figure>
+<p><strong>注意：因此我们应该保持对变量初始化时就赋值的好习惯，这样当我们做类型检测的时候就不会造成不必要的混乱</strong></p>
+<hr>
+<h5 id="Null-类型"><a href="#Null-类型" class="headerlink" title="Null 类型"></a>Null 类型</h5><p>Null类型只有一个值，即null。从逻辑角度上看，null值表示一个空对象指针，而这也正是使用typeof操作符检测null会返回”object”的原因</p>
+<p>实际上undefined值是派生自null值的，因此</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alert(<span class="literal">null</span> == <span class="literal">undefined</span>)</div><div class="line"><span class="comment">// true</span></div></pre></td></tr></table></figure>
+<p><strong>如果一个声明了一个将来才会使用到的变量，那么我们应该显式地将它赋值null而不是其它值</strong></p>
+<hr>
+<h5 id="Number类型"><a href="#Number类型" class="headerlink" title="Number类型"></a>Number类型</h5><h6 id="1-进制"><a href="#1-进制" class="headerlink" title="1. 进制"></a>1. 进制</h6><p>&emsp;&emsp;八进制字面值第一位必须为0，十六进制前两位必须为0x<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> octalNum = <span class="number">070</span></div><div class="line"><span class="comment">// 八进制的56</span></div><div class="line"><span class="keyword">var</span> hexNum = <span class="number">0xA</span></div><div class="line"><span class="comment">// 十六进制的10</span></div></pre></td></tr></table></figure></p>
+<h6 id="2-其它进制转换为十进制"><a href="#2-其它进制转换为十进制" class="headerlink" title="2. 其它进制转换为十进制"></a>2. 其它进制转换为十进制</h6><p>&emsp;&emsp;其它进制转换为十进制我们可以用Number()或者parseInt()函数。因为Number()函数分的情况比较混乱，所以在很多情况下我们会用parseInt()来做进制转换。</p>
+<p>parseInt()函数提供第二个参数：转换时使用的基数（即多少进制）。例：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> hexTo = <span class="built_in">parseInt</span>(<span class="string">"0xAF"</span>, <span class="number">16</span>)</div><div class="line"><span class="comment">// 175</span></div><div class="line"><span class="keyword">var</span> num1 = <span class="built_in">parseInt</span>(<span class="string">"10"</span>, <span class="number">2</span>)</div><div class="line"><span class="comment">// 2</span></div><div class="line"><span class="keyword">var</span> num2 = <span class="built_in">parseInt</span>(<span class="string">"10"</span>, <span class="number">8</span>)</div><div class="line"><span class="comment">// 8</span></div><div class="line"><span class="keyword">var</span> num3 = <span class="built_in">parseInt</span>(<span class="string">"10"</span>, <span class="number">16</span>)</div><div class="line"><span class="comment">// 16</span></div></pre></td></tr></table></figure></p>
+<h6 id="3-浮点数值"><a href="#3-浮点数值" class="headerlink" title="3. 浮点数值"></a>3. 浮点数值</h6><p>对于那些极大或者极小的数值，可以用e表示法（科学计数法）来表示。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> floatNum = <span class="number">3.125e7</span></div><div class="line"><span class="comment">// 31250000</span></div></pre></td></tr></table></figure></p>
+<p><strong>注意：浮点数值的最高精度是17位小数，但在进行算术时其精度远远不如整数。比如0.1加0.2不等于0.3：</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">alert(<span class="number">0.1</span> + <span class="number">0.2</span>)</div><div class="line"><span class="comment">// 0.30000000000000004</span></div><div class="line"><span class="keyword">if</span> (a + b == <span class="number">0.3</span>) &#123;	<span class="comment">// 不要做这样的判断</span></div><div class="line">	alert(<span class="string">"you got the 0.3"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果要一定要做这样的判断，在此提供了一个解决方法<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> temp = (a * <span class="number">10</span> + b * <span class="number">10</span>) / <span class="number">10</span> 	<span class="comment">//先将浮点数转化为整数作加法，然后再转为浮点数</span></div><div class="line"><span class="keyword">if</span> (temp == <span class="number">0.3</span>) &#123;</div><div class="line">	alert(<span class="string">"you got the 0.3"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h6 id="4-NaN-Not-a-Number"><a href="#4-NaN-Not-a-Number" class="headerlink" title="4. NaN (Not a Number)"></a>4. NaN (Not a Number)</h6><ul>
+<li>任何涉及NaN的操作或运算都会返回NaN</li>
+<li>NaN与任何值都不相等</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">alert(<span class="literal">NaN</span> / <span class="number">10</span>)</div><div class="line"><span class="comment">// NaN</span></div><div class="line"></div><div class="line">alert(<span class="literal">NaN</span> == <span class="literal">NaN</span>)</div><div class="line"><span class="comment">// false</span></div></pre></td></tr></table></figure>
+<p>isNaN()函数用来判断这个参数是否为NaN，当isNaN()接收到一个参数之后，会尝试将这个值转换为数值，任何不能被转换为数值的值都会导致这个函数返回true。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">alert(<span class="built_in">isNaN</span>(<span class="literal">NaN</span>))</div><div class="line"><span class="comment">// true</span></div><div class="line">alert(<span class="built_in">isNaN</span>(<span class="number">10</span>))</div><div class="line"><span class="comment">// false</span></div><div class="line">alert(<span class="built_in">isNaN</span>(<span class="string">"10"</span>))</div><div class="line"><span class="comment">// false（转为数字10）</span></div><div class="line">alert(<span class="built_in">isNaN</span>(<span class="string">"blue"</span>))</div><div class="line"><span class="comment">// true（不能转为数值）</span></div><div class="line">alert(<span class="built_in">isNaN</span>(<span class="literal">true</span>))</div><div class="line"><span class="comment">// false(true转为1)</span></div></pre></td></tr></table></figure></p>
+<p>在基于对象调用isNaN()函数时，会先调用对象的valueOf()方法，然后确定该方法返回的值是否可以转换为数值。如果不能，则基于这个<strong>返回值</strong>再调用toString()方法，再测试返回值。</p>
+<h6 id="5-数值转换"><a href="#5-数值转换" class="headerlink" title="5. 数值转换"></a>5. 数值转换</h6><ul>
+<li><p>Number()函数</p>
+</li>
+<li><p>parseInt()函数</p>
+</li>
+</ul>
+<p>&emsp;&emsp;parseInt()函数在转换字符串时，会忽略字符串前面的空格，直至找到第一个非空格的字符。如果第一个字符就不是数字字符或者负号，就直接返回NaN。也就是说parseInt(“a123”)返回NaN，第一个字符”a”不是数字字符或者负号；parseInt(“12.3”)返回12，”.”不是数字字符或者负号。</p>
+<ul>
+<li>parseFloat()函数</li>
+</ul>
+<p>&emsp;&emsp;parseFloat()函数始终都会忽略前导的零。对十六进制格式的字符串始终返回0。</p>
+<hr>
+<h5 id="6-String类型"><a href="#6-String类型" class="headerlink" title="6. String类型"></a>6. String类型</h5><p>数值、布尔值、对象和字符串都有toString()方法，但是null和undefined值没有这个方法。<br>在调用数值的toString()方法时，可以传递一个参数：输出的基数。通过这个基数可以使toString()方法输出以二进制、八进制、十六进制，乃至其他做生意有效进制格式表示的字符串值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> num = <span class="number">10</span>;</div><div class="line">alert(num.toString())	<span class="comment">// 10</span></div><div class="line">alert(num.toString(<span class="number">2</span>))	<span class="comment">// 1010</span></div><div class="line">alert(num.toString(<span class="number">8</span>))	<span class="comment">// 12</span></div><div class="line">alert(num.toString(<span class="number">10</span>))	<span class="comment">// 10</span></div><div class="line">alert(num.toString(<span class="number">16</span>))	<span class="comment">// a</span></div></pre></td></tr></table></figure>
+<p>在不知道要转换的值是不是null或undefined的情况下，可以使用转型函数String()，这个函数能够将任何类型的值转换的为字符串。String()函数遵循下列规则：</p>
+<ul>
+<li><p>如果有toString()方法，则调用该方法（没有参数）并返回相应的结果</p>
+</li>
+<li><p>如果是null，则返回”null”</p>
+</li>
+<li><p>如果是undefined，则返回”undefined”</p>
+</li>
+</ul>
+<hr>
+<h5 id="7-Object类型"><a href="#7-Object类型" class="headerlink" title="7. Object类型"></a>7. Object类型</h5><p>Object的每个实例都具有下列属性和方法。</p>
+<ul>
+<li><p>constructor： 保存着用于创建当前对象的函数</p>
+</li>
+<li><p>hasOwnProperty(propertyName): 用于检查给定的属性在当前对象实例中（而不是在实例的原型中）是否存在。其中，作为参数的属性名(propertyName)必须以字符串形式指定（例：o.hasOwnproperty(“name”)）</p>
+</li>
+<li><p>isPrototypeOf(object)：用于检查传入的对象是否是当前对象的原型</p>
+</li>
+<li><p>propertyIsEnumerable(propertyName)：用于检查给定的属性是否能够使用for-in语句来枚举</p>
+</li>
+<li><p>toLocaleString()：返回对象的字符串表示，该字符串与执行环境的地区对应</p>
+</li>
+<li><p>toString()：返回对象的字符串表示</p>
+</li>
+<li><p>valueOf()：返回对象的字符串、数值或者布尔值表示。通常与toString()方法的返回值相同</p>
+</li>
+</ul>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2017-06-25</span><i class="fa fa-tag"></i><a href="/tags/读书笔记/" title="读书笔记" class="tag">读书笔记 </a></div></div></div></div><div class="share"><div class="evernote"><a href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank" class="fa fa-bookmark"></a></div><div class="weibo"><a href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));" class="fa fa-weibo"></a></div><div class="twitter"><a href="http://twitter.com/home?status=,https://kunkuntang.github.io/2017/06/25/Javascript-data-structure/,Tommi_Max's blog,Javascript 数据类型,;" class="fa fa-twitter"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a role="navigation" href="/2017/08/06/SoftwareTesting/" title="软件测试" class="btn">上一篇</a></li><li class="next pagbuttons"><a role="navigation" href="/2017/04/27/interestingCSS/" title="双栏布局（一）" class="btn">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>

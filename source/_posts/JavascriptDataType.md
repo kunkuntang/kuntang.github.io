@@ -15,7 +15,7 @@ ECMAScript中有5种简单数据类型（也称基本数据类型）：Undefined
 
 ---
 
-#####typeof 操作符
+#### typeof 操作符
 
 对一个值使用typeof操作符可能返回下列某个字符串
 
@@ -32,7 +32,7 @@ ECMAScript中有5种简单数据类型（也称基本数据类型）：Undefined
 
 ---
 
-#####Undefined类型
+#### Undefined类型
 
 Undefined类型只有一个值，即undefined
 
@@ -60,7 +60,7 @@ alert(typeof age);
 
 ---
 
-#####Null 类型
+#### Null 类型
 
 Null类型只有一个值，即null。从逻辑角度上看，null值表示一个空对象指针，而这也正是使用typeof操作符检测null会返回"object"的原因
 

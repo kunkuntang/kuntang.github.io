@@ -1,10 +1,8 @@
 ---
-title: Javascript_data_structure
+title: Javascript 数据类型
 date: 2017-06-25 12:55:30
 tags: 读书笔记
 ---
-
-## Javascript 数据类型
 
 &emsp;&emsp;*本文摘录于Javascript高级程序设计（Professional JavaScript for Web Developers）并加上了自己的一些理解，如发现本文有什么错误之处，请麻烦通过以下方式联系我作修正，谢谢!*
 &emsp;&emsp;*微信号: kuntang9080*
@@ -17,7 +15,7 @@ ECMAScript中有5种简单数据类型（也称基本数据类型）：Undefined
 
 <!-- more -->
 
-#####typeof 操作符
+##### typeof 操作符
 
 对一个值使用typeof操作符可能返回下列某个字符串
 
@@ -30,11 +28,11 @@ ECMAScript中有5种简单数据类型（也称基本数据类型）：Undefined
 |object|这个值是对象或者null|
 |function|这个值是函数|
 
-==注意：当typeof返回是object的时候对应着两个值，因此不能用typeof来区分object类型和null类型，此时应该用instanceof()函数==
+**注意：当typeof返回是object的时候对应着两个值，因此不能用typeof来区分object类型和null类型，此时应该用instanceof()函数**
 
 ---
 
-#####Undefined类型
+##### Undefined类型
 
 Undefined类型只有一个值，即undefined
 
@@ -58,11 +56,11 @@ alert(typeof age);
 // undefined
 ```
 
-==注意：因此我们应该保持对变量初始化时就赋值的好习惯，这样当我们做类型检测的时候就不会造成不必要的混乱==
+**注意：因此我们应该保持对变量初始化时就赋值的好习惯，这样当我们做类型检测的时候就不会造成不必要的混乱**
 
 ---
 
-#####Null 类型
+##### Null 类型
 
 Null类型只有一个值，即null。从逻辑角度上看，null值表示一个空对象指针，而这也正是使用typeof操作符检测null会返回"object"的原因
 
@@ -73,11 +71,11 @@ alert(null == undefined)
 // true
 ```
 
-==如果一个声明了一个将来才会使用到的变量，那么我们应该显式地将它赋值null而不是其它值 ==
+**如果一个声明了一个将来才会使用到的变量，那么我们应该显式地将它赋值null而不是其它值**
 
 ---
 
-#####Number类型
+##### Number类型
 
 ###### 1. 进制
 
@@ -89,7 +87,7 @@ var hexNum = 0xA
 // 十六进制的10
 ```
 
-######2. 其它进制转换为十进制
+###### 2. 其它进制转换为十进制
 
 &emsp;&emsp;其它进制转换为十进制我们可以用Number()或者parseInt()函数。因为Number()函数分的情况比较混乱，所以在很多情况下我们会用parseInt()来做进制转换。
 
@@ -105,7 +103,7 @@ var num3 = parseInt("10", 16)
 // 16
 ```
 
-######3. 浮点数值
+###### 3. 浮点数值
 
 对于那些极大或者极小的数值，可以用e表示法（科学计数法）来表示。
 ```Javascript
@@ -113,7 +111,7 @@ var floatNum = 3.125e7
 // 31250000
 ```
 
-==注意：浮点数值的最高精度是17位小数，但在进行算术时其精度远远不如整数。比如0.1加0.2不等于0.3：==
+**注意：浮点数值的最高精度是17位小数，但在进行算术时其精度远远不如整数。比如0.1加0.2不等于0.3：**
 ```Javascript
 alert(0.1 + 0.2)
 // 0.30000000000000004
@@ -130,7 +128,7 @@ if (temp == 0.3) {
 }
 ```
 
-######4. NaN (Not a Number)
+###### 4. NaN (Not a Number)
 
 - 任何涉及NaN的操作或运算都会返回NaN
 - NaN与任何值都不相等
@@ -158,7 +156,7 @@ alert(isNaN(true))
 ```
 在基于对象调用isNaN()函数时，会先调用对象的valueOf()方法，然后确定该方法返回的值是否可以转换为数值。如果不能，则基于这个**返回值**再调用toString()方法，再测试返回值。
 
-######5. 数值转换
+###### 5. 数值转换
 
 - Number()函数
 
