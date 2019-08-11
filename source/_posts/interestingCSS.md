@@ -1,9 +1,7 @@
----
 title: 双栏布局（一）
-date: 2017-04-27 00:07:09
 tags: 每周一练
+date: 2017-04-27 00:07:09
 ---
-
 今天写代码的时候遇到了一个需求，想想也是觉得这个需求挺常见的，所以就写下来记一下。
 
 ### 需求说明：
@@ -205,6 +203,6 @@ tags: 每周一练
 
 效果如下图：
 
-![demo3](demo3.gif)
+![demo3](/images/demo3.gif)
 
 *[此案例在线demo地址：](http://lenkuntang.cn/blogDemo/interestingCSS/index.html)*
