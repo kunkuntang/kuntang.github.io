@@ -1,7 +1,10 @@
----
 title: JavaScript 设计模式与开发实践
-date: 2017-08-09 19:51:22
-tags: 读书笔记
+tags:
+  - 读书笔记
+categories:
+  - JavaScript
+  - ''
+date: 2017-08-09 19:51:00
 ---
 
 ## 基础知识

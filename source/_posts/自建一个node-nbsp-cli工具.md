@@ -3,7 +3,8 @@ author: Tommi_Max
 tags:
   - 个人总结
 categories:
-  - 技术
+  - 项目构建
+  - ''
 date: 2019-08-11 16:28:00
 ---
 cli——**命令行界面**（英语：**command-line interface**），我们可以通过cli提供的特定命令执行、操作对应功能。

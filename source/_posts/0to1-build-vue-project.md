@@ -1,8 +1,11 @@
----
 layout: '[post]'
 title: 从零到一搭建Vue项目工程（Vue全家桶、Vue测试、持续集成）
-date: 2018-07-08 12:49:49
 tags:
+  - 个人总结
+categories:
+  - Vue
+  - ''
+date: 2018-07-08 12:49:00
 ---
 
 ## 开篇前记

@@ -11,6 +11,16 @@
       else
         a(href="/archives")= __('Archive')
     li
+      if is_current('categories')
+        a.current(href="/categories")= __('Categories')					
+      else
+        a(href="/categories")= __('Categories')	
+    li
+      if is_current('tags')
+        a.current(href="/tags")= __('Tags')					
+      else
+        a(href="/tags")= __('Tags')	
+    li
       if is_current('about')
         a.current(href="/about")= __('About')			
       else
@@ -19,12 +29,7 @@
       if is_current('links')
         a.current(href="/links")= __('Links')					
       else
-        a(href="/links")= __('Links')
-    li
-      if is_current('tags')
-        a.current(href="/tags")= __('Tags')					
-      else
-        a(href="/tags")= __('Tags')		
+        a(href="/links")= __('Links')	
   .information
     .back_btn
       li

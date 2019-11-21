@@ -2,7 +2,10 @@ layout: '[post]'
 title: Nginx conf 常用配置
 tags:
   - 转载
-categories: []
+  - 备忘翻阅
+categories:
+  - 项目构建
+  - ''
 date: 2019-07-15 23:52:00
 ---
 

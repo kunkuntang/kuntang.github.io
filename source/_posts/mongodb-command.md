@@ -1,8 +1,11 @@
----
 layout: '[post]'
 title: MongoDB Shell命令
-date: 2017-11-30 16:39:03
-tags: 读书笔记
+tags:
+  - 备忘翻阅
+categories:
+  - Mongodb
+  - ''
+date: 2017-11-30 16:39:00
 ---
 
 #### 开启MongoDB数据库服务

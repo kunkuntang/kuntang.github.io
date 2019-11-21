@@ -1,8 +1,11 @@
----
 layout: '[post]'
 title: mac下卸载Node.js并使用nvm来管理Node版本
+tags:
+  - 转载
+  - 备忘翻阅
+categories:
+  - ''
 date: 2018-11-12 01:07:00
-tags: 转载
 ---
 
 > 转载自：https://www.zhihu.com/question/27389115/answer/36434788

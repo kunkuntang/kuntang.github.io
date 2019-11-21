@@ -1,7 +1,10 @@
----
 title: Javascript 数据类型
-date: 2017-06-25 12:55:30
-tags: 读书笔记
+tags:
+  - 读书笔记
+categories:
+  - JavaScript
+  - ''
+date: 2017-06-25 12:55:00
 ---
 
 &emsp;&emsp;*本文摘录于Javascript高级程序设计（Professional JavaScript for Web Developers）并加上了自己的一些理解，如发现本文有什么错误之处，请麻烦通过以下方式联系我作修正，谢谢!*
