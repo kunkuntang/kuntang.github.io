@@ -103,3 +103,13 @@ admin:
   password_hash: $2a$10$Qs1YdnjgKL5yNuP3N9jur.SfoMz1rEVjBY5h32sIMxO4IEOM0fCLa
   secret: lenkuntang
   deployCommand: deploy
+
+toc:
+  maxdepth: 3
+  class: toc
+  slugify: transliteration
+  decodeEntities: false
+  anchor:
+    position: before
+    symbol: ''
+    style: header-anchor
