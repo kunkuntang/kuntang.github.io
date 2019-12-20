@@ -7,11 +7,40 @@ categories:
   - ''
 date: 2017-11-30 16:39:00
 ---
-
 #### 开启MongoDB数据库服务
 
 &emsp;&emsp;mongo根目录`/bin/mongod -f` 配置文件目录/配置文件名
 例：`./bin/mongod -f conf/mongod.conf`
+
+Mongod.conf文件内容参考如下：
+
+```
+dbpath = /data/mongodb
+logpath = /data/mongodb/mongodb.log
+logappend = true
+port = 27017
+fork = true
+auth = true
+```
+
+Mongod命令各常用参数说明：
+
+| 参数                 | 说明                                                         |
+| -------------------- | ------------------------------------------------------------ |
+| --quiet              | 安静输出                                                     |
+| --port arg           | 指定服务端口号，默认端口27017                                |
+| --bind_ip arg        | 绑定服务IP，若绑定127.0.0.1，则只能本机访问，不指定默认本地所有IP |
+| --logpath arg        | 指定MongoDB日志文件，注意是指定文件不是目录                  |
+| --logappend          | 使用追加的方式写日志                                         |
+| --journal            | 启用日志选项，MongoDB的数据操作将会写入到journal文件夹的文件里 |
+| --journalOptions arg | 启用日志诊断选项                                             |
+| --fork               | 以守护进程的方式运行MongoDB，创建服务器进程                  |
+| --maxConns arg       | 最大同时连接数 默认2000                                      |
+| --auth               | 启用验证                                                     |
+| --noauth             | 不启用验证                                                   |
+| --dbpath arg         | 指定数据库路径                                               |
+| --ipv6               | 启用IPv6选项                                                 |
+| --pidfilepath arg    | PID File 的完整路径，如果没有设置，则没有PID文件             |
 
 <!-- more -->
 
@@ -128,8 +157,7 @@ date: 2017-11-30 16:39:00
 &emsp;&emsp;过期索引的限制： 
 
 1. 存储在过期索引字段的值必须是指定的时间类型，必须是ISODate或者ISODate数组，不能使用时间戳，否则不能自动删除。 
-例如 >db.imooc_2.insert({time:1})，这种是不能被自动删除的 
+   例如 >db.imooc_2.insert({time:1})，这种是不能被自动删除的 
 2. 如果指定了ISODate数组，则按照最小的时间进行删除。 
 3. 过期索引不能是复合索引。因为不能指定两个过期时间。 
 4. 删除时间是不精确的。删除过程是由MongoDB的后台进程每60s跑一次的，而且删除也需要一定时间，所以存在误差
-
