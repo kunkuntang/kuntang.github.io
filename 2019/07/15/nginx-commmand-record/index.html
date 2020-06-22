@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="CubeSuger"><title>Nginx conf 常用配置 · CubeSuger's blog</title><meta name="description" content="因为不熟悉Nginx，对他的匹配规则似懂非懂，所以平时在部署自己项目的时候经常会遇到各种问题，因此在此记录一下一路踩过的坑。
+nginx.conf 与 conf.d 目录首先Nginx里有一份基础配置nginx.conf文件，里面通常是nginx的一些默认配置信息，注意在默认配置前有一行引入自定义文"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;margin-bottom: 1.5rem"><h3 title><a href="/">CubeSuger's blog</a></h3></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a onclick="window.history.go(-1)" class="fa fa-chevron-left"> </a></li></div><div class="avatar"><img></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h2><a>Nginx conf 常用配置</a></h2></div><div class="post-content"><p>因为不熟悉Nginx，对他的匹配规则似懂非懂，所以平时在部署自己项目的时候经常会遇到各种问题，因此在此记录一下一路踩过的坑。</p>
+<h3 id="nginx-conf-与-conf-d-目录"><a href="#nginx-conf-与-conf-d-目录" class="headerlink" title="nginx.conf 与 conf.d 目录"></a>nginx.conf 与 conf.d 目录</h3><p>首先Nginx里有一份基础配置nginx.conf文件，里面通常是nginx的一些默认配置信息，注意在默认配置前有一行引入自定义文件的代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Load modular configuration files from the /etc/nginx/conf.d directory.</span><br><span class="line"># See http://nginx.org/en/docs/ngx_core_module.html#include</span><br><span class="line"># for more information.</span><br><span class="line">include /etc/nginx/conf.d/*.conf;</span><br></pre></td></tr></table></figure></p>
+<p>最后一行把 <code>conf</code> 目录下的所有以.conf后缀结尾的文件都引入进来，而因为Nginx配置文件的规则是前面先匹配到的先生效，所以我们可以把自己写的自定义配置文件在 <code>conf</code> 目录下，然后覆盖后面的默认配置。</p>
+<h3 id="server-块"><a href="#server-块" class="headerlink" title="server 块"></a>server 块</h3><p>关于server块目前比较明白的有以下几个字段：</p>
+<ul>
+<li><code>listen</code> 代表着监听的端口<blockquote>
+<p>网页通常是监听80、443端口，还有一些服务应用应该监听对应的端口，如21、25等。</p>
+</blockquote>
+</li>
+<li><code>server_name</code> 代表监听的域名<blockquote>
+<p>通常是在域名服务商通过设置相应的域名然后解析到服务器的ip，其设置的域名便是 <code>server_name</code> 的值</p>
+</blockquote>
+</li>
+<li><code>root</code> 匹配后指向的访问路径（拼接匹配的url部分）<blockquote>
+<p>要注意当前nginx使用的用户是否有该对指向的路径有相应的访问权限。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="location-块"><a href="#location-块" class="headerlink" title="location 块"></a>location 块</h3><p><code>location</code> 处于 <code>server</code> 块下，一个 <code>server</code> 块可以有若干个 <code>location</code> ，先匹配到的 <code>location</code> 规则先处理，并停止往后匹配。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  ...</span><br><span class="line">  location [pattern rule] &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>location</code> 后面接对应的 url 匹配规则，可以是要匹配的字符串（字符串后面可带<code>/</code>也可以不带），也可以是正则。</p>
+<p>通过 <code>location</code> 实现请求转发来处理前端接口跨域问题，还可以通过它来实现外部对内部服务的代理访问。一般我会用到以下几个字段：</p>
+<ul>
+<li><code>root</code> 匹配后指向的访问路径（拼接匹配的url部分）</li>
+<li><code>alias</code> 匹配后指向的访问路径（替换匹配的url部分）</li>
+<li><code>proxy_pass</code> 把请求转发到指向地址</li>
+<li><code>index</code> 匹配后指向的访问路径下的文件</li>
+</ul>
+<h4 id="root-与-alias"><a href="#root-与-alias" class="headerlink" title="root 与 alias"></a>root 与 alias</h4><p>当 <code>location</code> 是用字符串来匹配时，配置 <code>root</code> 与 <code>alias</code> 是区别的：当 <code>location</code> 匹配到相应的 <code>url</code> <code>后，root</code> 对在匹配的规则后接上 <code>root</code> 指向的路径，而 <code>alisa</code> 会直接替换掉匹配的url部分。</p>
+<p>举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location ~ ^/xingcard/ &#123;</span><br><span class="line">  root /data/www/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当一个URI是 <code>/app/xingcard/index.html</code> 时，nginx将会返回服务器上 <code>/data/www/app/xingcard/index.html</code>的文件。root会根据完整的URI请求来映射，也就是/path/uri。</p>
+<p>如果我们把 <code>root</code> 换成 <code>alias</code> 的话：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location ~ ^/app/ &#123;</span><br><span class="line">  alais /data/www/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>则nginx会将<code>/data/www/xingcard/index.html</code>返回给客户端。区别就是在于有没有替换掉 <code>location</code> 匹配的 <code>app</code>。</p>
+<blockquote>
+<p>注意：</p>
+<ol>
+<li>使用alias时，目录名后面一定要加”/“。</li>
+<li>alias可以指定任何名称。</li>
+<li>alias在使用正则匹配时，必须捕捉要匹配的内容并在指定的内容处使用。</li>
+<li>alias只能位于location块中。</li>
+</ol>
+</blockquote>
+<h4 id="proxy-pass-字段"><a href="#proxy-pass-字段" class="headerlink" title="proxy_pass 字段"></a>proxy_pass 字段</h4><p><code>ngixn</code> 对于 <code>proxy_pass</code> 的处理分为两种，一种是只有IP和端口号，另一种是除了IP和端口号外还包含了其它路径（URI）（其中也包括单个<code>/</code>符）。</p>
+<p>对于不含URI的 <code>proxy_pass</code> ， nginx 将会保留location中的路径部分，即在 <code>proxy_pass</code> 的值后面拼接上 <code>loaction</code> 的匹配路径。</p>
+<p>对于含URI的 <code>proxy_pass</code> ，nginx将使用诸如alias的替换方式对URL进行替换。</p>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  ...</span><br><span class="line">  location /api1/ &#123;</span><br><span class="line">    proxy_pass http://localhost:8080;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  location /api2/ &#123;</span><br><span class="line">    proxy_pass http://localhost:8080/;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>访问 <code>ip/api1/login</code> 地址，转发到服务器的地址应该是 <code>http://localhost:8080/api1/login</code><br>访问 <code>ip/api2/login</code> 地址，转发到服务器的地址应该是 <code>http://localhost:8080/login</code></p>
+<h4 id="index-字段"><a href="#index-字段" class="headerlink" title="index 字段"></a>index 字段</h4><blockquote>
+<p>转载自：<a href="https://blog.csdn.net/qq_32331073/article/details/81945134" target="_blank" rel="noopener">Nginx之坑：完全理解location中的index，配置网站初始页</a></p>
+</blockquote>
+<ul>
+<li>该指令后面可以跟多个文件，用空格隔开；</li>
+<li>如果包括多个文件，Nginx会根据文件的枚举顺序来检查，直到查找的文件存在；</li>
+<li>文件可以是相对路径也可以是绝对路径，绝对路径需要放在最后；</li>
+<li>文件可以使用变量$来命名；</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  ...</span><br><span class="line">  location /app &#123;</span><br><span class="line">    ...</span><br><span class="line">    index  index.$geo.html  index.0.html  /index.html;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该指令拥有默认值，index index.html ，即，如果没有给出index，默认初始页为index.html</p>
+<p>Nginx给了三种方式来选择初始页，三种方式按照顺序来执行：</p>
+<ul>
+<li><a href="http://nginx.org/en/docs/http/ngx_http_random_index_module.html" target="_blank" rel="noopener">ngx_http_random_index_module</a> 模块，从给定的目录中随机选择一个文件作为初始页，而且这个动作发生在 <a href="http://nginx.org/en/docs/http/ngx_http_index_module.html" target="_blank" rel="noopener">ngx_http_index_module</a> 之前，注意：这个模块默认情况下没有被安装，需要在安装时提供配置参数 -with-http_random_index_module；</li>
+<li><a href="http://nginx.org/en/docs/http/ngx_http_index_module.html" target="_blank" rel="noopener">ngx_http_index_module</a> 模块，根据index指令规则来选择初始页；</li>
+<li><a href="http://nginx.org/en/docs/http/ngx_http_autoindex_module.html" target="_blank" rel="noopener">ngx_http_autoindex_module</a> 模块，可以使用指定方式，根据给定目录中的文件列表自动生成初始页，这个动作发生在<br><a href="http://nginx.org/en/docs/http/ngx_http_index_module.html" target="_blank" rel="noopener">ngx_http_index_module</a> 之后，即只有通过index指令无法确认初始页，此时启用后的自动生成模块才会被使用。</li>
+</ul>
+<p><strong>如果文件存在，则使用文件作为路径，发起内部重定向。直观上看上去就像再一次从客户端发起请求，Nginx再一次搜索location一样。</strong> 既然是内部重定向，域名+端口不发生变化，所以只会在同一个server下搜索。同样，如果内部重定向发生在proxy_pass反向代理后，那么重定向只会发生在代理配置中的同一个server。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen      80;</span><br><span class="line">    server_name example.org www.example.org;    </span><br><span class="line">    </span><br><span class="line">    location / &#123;</span><br><span class="line">        root    /data/www;</span><br><span class="line">        index   index.html index.php;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    location ~ \.php$ &#123;</span><br><span class="line">        root    /data/www/test;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的例子中，如果你使用example.org或<a href="http://www.example.org直接发起请求，那么首先会访问到“/”的location，结合root与index指令，会先判断/data/www/index.html是否存在，如果不，则接着查看" target="_blank" rel="noopener">www.example.org直接发起请求，那么首先会访问到“/”的location，结合root与index指令，会先判断/data/www/index.html是否存在，如果不，则接着查看</a><br>/data/www/index.php ，如果存在，则使用/index.php发起内部重定向，就像从客户端再一次发起请求一样，Nginx会再一次搜索location，毫无疑问匹配到第二个~ .php$，从而访问到/data/www/test/index.php。</p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-07-15</span><i class="fa fa-tag"></i><a href="/categories/项目构建/" title="项目构建" class="tag">项目构建 </a><a href="/tags/备忘翻阅/" title="备忘翻阅" class="tag">备忘翻阅 </a><a href="/tags/转载/" title="转载" class="tag">转载 </a></div></div></div></div><div class="share"><div class="evernote"><a href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank" class="fa fa-bookmark"></a></div><div class="weibo"><a href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));" class="fa fa-weibo"></a></div><div class="twitter"><a href="http://twitter.com/home?status=,https://kunkuntang.github.io/2019/07/15/nginx-commmand-record/,CubeSuger's blog,Nginx conf 常用配置,;" class="fa fa-twitter"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a role="navigation" href="/2019/08/11/自建一个node-nbsp-cli工具/" title="自建一个node cli工具" class="btn">上一篇</a></li><li class="next pagbuttons"><a role="navigation" href="/2018/11/12/manage-Node-js-version-via-mvn/" title="mac下卸载Node.js并使用nvm来管理Node版本" class="btn">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>

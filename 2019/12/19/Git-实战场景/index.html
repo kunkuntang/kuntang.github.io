@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="CubeSuger"><title>Git 实战场景 · CubeSuger's blog</title><meta name="description" content="情景一：开发中途添加远端仓库通常情况这个场景通常是：开发者在接到新项目时直接在本地开发，到了开发中途才发现需要把工程纳入到版本管理，这个时候他在代码托管平台上新建了一个空的远程仓库，然后执行一下命令：
+12345// 添加远程仓库地址并命名为origingit remote add origin ["><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;margin-bottom: 1.5rem"><h3 title><a href="/">CubeSuger's blog</a></h3></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li><li><a href="/categories">分类</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a onclick="window.history.go(-1)" class="fa fa-chevron-left"> </a></li></div><div class="avatar"><img></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h2><a>Git 实战场景</a></h2></div><div class="post-content"><h3 id="情景一：开发中途添加远端仓库"><a href="#情景一：开发中途添加远端仓库" class="headerlink" title="情景一：开发中途添加远端仓库"></a>情景一：开发中途添加远端仓库</h3><h5 id="通常情况"><a href="#通常情况" class="headerlink" title="通常情况"></a>通常情况</h5><p>这个场景通常是：开发者在接到新项目时直接在本地开发，到了开发中途才发现需要把工程纳入到版本管理，这个时候他在代码托管平台上新建了一个空的远程仓库，然后执行一下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 添加远程仓库地址并命名为origin</span><br><span class="line">git remote add origin [URL]</span><br><span class="line"></span><br><span class="line">// 提交代码到远程仓库并将origin设置为默认提交仓库</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>设置了默认提交仓库后，以后再往origin这个远程仓库提交代码就可以不用指定直接执行<code>git push</code>就可以了。</p>
+</blockquote>
+<h5 id="特殊情况"><a href="#特殊情况" class="headerlink" title="特殊情况"></a>特殊情况</h5><p>但由于一般的代码托管平台在新建仓库时可以选择<strong>初始化仓库</strong>，也就是会新建一个<strong>README.md</strong>文件并生成一次提交。如下图：</p>
+<p><img src="/images/image-20191128113937513.png" alt="upload successful"></p>
+<p>如果不小心在新建的时候勾选了这个一个选项，那么你将可以有一下方法处理：</p>
+<p>一、 删掉重建</p>
+<ul>
+<li>删掉刚刚新建的远程仓库。</li>
+<li>重新再建一个空的仓库。</li>
+<li>按照<strong>通常情况</strong>的流程走一遍就可以了。</li>
+</ul>
+<p>这个是最安全又快捷的方法，但如果你出于某些原因无法再新建一个仓库，比如说你没有删除仓库的权限，而你又不想麻烦你的上级来处理这种低级的问题，怕上级会因此怀疑你的能力，那么你可以尝试下面的操作。</p>
+<p>二、本地合并</p>
+<ul>
+<li>根据本地的master分支新建一个备份分支master_backup。</li>
+<li>切换到备份分支，然后删除本地的master分支。</li>
+<li>本地切换到master分支。</li>
+<li>切换回master_bakcup分支并变基到master。</li>
+<li>master分支合并master_backup分支（Fast-forward)。</li>
+<li>删除master_bakcup分支。</li>
+</ul>
+<p>一开始仓库的图为如下：</p>
+<p><img src="/images/image-20191128140108874.png" alt="upload successful"></p>
+<p>然后使用<code>git branch master_backup</code>命令把master上的代码备份到<code>master_backup</code>分支上，再使用<code>git checkout master_backup</code>切换到<code>master_backup</code>分支，使用<code>git branch -D master</code>删除本地的<code>master</code>分支。操作完如下图所示：</p>
+<p><img src="/images/image-20191128142021000.png" alt="upload successful"></p>
+<p>接着使用<code>git checkout mater</code>切换到master分支，这步操作会直接从远端的master上拉取代码，并在本地上新建一个master分支。确认本地存在了master分支后，就可以使用<code>git checkout master_backup</code>切换回master_backup分支，最后使用<code>git rebase master</code>将maser_backup上的代码变基到master上。变基完如下图：</p>
+<p><img src="/images/image-20191128142447611.png" alt="upload successful"></p>
+<p>可以看到，本地的master分支和master_backup分支已经连成一条直线了。最后再切换回master分支，然后使用<code>git merge master_backup</code>合并（Fost-forward）master_backup分支就完成了代码的迁移了。此时master_backup分支上的代码就可以删除掉了。最后分支图如下：</p>
+<p><img src="/images/image-20191128142917368.png" alt="upload successful"></p>
+<h2 id="场景二：忘记把忽略文件添加到-gitignore中"><a href="#场景二：忘记把忽略文件添加到-gitignore中" class="headerlink" title="场景二：忘记把忽略文件添加到.gitignore中"></a>场景二：忘记把忽略文件添加到.gitignore中</h2><p>当你忘记添加 .gitignore 文件，不小心把一个很大的不需要追踪的文件添加到暂存区时（还没有提交），比如没有排除<code>node_modules</code>文件夹并执行了<code>git add -A</code>操作。如图：</p>
+<p><img src="/images/image-20191128182507434.png" alt="upload successful"></p>
+<p>这个时候你想把<code>node_modules</code>文件夹下的文件从追踪列表中移除，可以使用一下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm --cached node_modules -r</span><br></pre></td></tr></table></figure>
+<p><img src="/images/image-20191128182813621.png" alt="upload successful"></p>
+<p>这样<code>node_modules</code>里的文件就已经从追踪列表中移除了，这个时候就可以在.gitignore文件中添加node_modules目录了。</p>
+<h2 id="情景三：使用别名"><a href="#情景三：使用别名" class="headerlink" title="情景三：使用别名"></a>情景三：使用别名</h2></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-12-19</span><i class="fa fa-tag"></i><a href="/categories/Git/" title="Git" class="tag">Git </a><a href="/tags/备忘翻阅/" title="备忘翻阅" class="tag">备忘翻阅 </a></div></div></div></div><div class="share"><div class="evernote"><a href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank" class="fa fa-bookmark"></a></div><div class="weibo"><a href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));" class="fa fa-weibo"></a></div><div class="twitter"><a href="http://twitter.com/home?status=,https://kunkuntang.github.io/2019/12/19/Git-实战场景/,CubeSuger's blog,Git 实战场景,;" class="fa fa-twitter"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a role="navigation" href="/2020/06/22/使用Jenkins自动化构建你的个人网站/" title="使用Jenkins自动化构建你的个人网站" class="btn">上一篇</a></li><li class="next pagbuttons"><a role="navigation" href="/2019/11/21/并发和并行的区别/" title="并发和并行的区别" class="btn">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
